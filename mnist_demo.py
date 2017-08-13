@@ -15,7 +15,7 @@ cross_entropy = -tf.reduce_sum(y_*tf.log(y))
 
 train_step = tf.train.GradientDescentOptimizer(0.01).minimize(cross_entropy)
 
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
 
@@ -23,6 +23,8 @@ for i in range(1000):
   if i % 20 == 0:
     sys.stdout.write('.')
   batch_xs, batch_ys = mnist.train.next_batch(100)
+  # if i<2:
+  #   print("i = " + str(i) + "\nbatch_xs = " + str(batch_xs) + "\nbatch_ys =" + str(batch_ys) + "\n\n")
   sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 print("")
 
